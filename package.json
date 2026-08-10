@@ -1,0 +1,29 @@
+{
+  "name": "web-app",
+  "version": "4.6.3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:debug": "NOVA_BUILD_MODE=debug node scripts/build.mjs",
+    "check": "npm run build && node --check worker.js && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "test": "npm run build && node --test",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "cloudflare": {
+    "bindings": {
+      "KV": {
+        "description": "Nova's compatibility and migration store. Cloudflare creates and binds it automatically."
+      },
+      "DB": {
+        "description": "Nova's primary D1 database for settings, users, usage, logs, and authentication."
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "esbuild": "^0.28.1",
+    "html-minifier-terser": "^7.2.0",
+    "wrangler": "^4.116.0"
+  }
+}
